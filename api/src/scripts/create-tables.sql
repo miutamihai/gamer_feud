@@ -37,7 +37,7 @@ CREATE TABLE `user_games`
     CONSTRAINT `fk_user_games_users` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 );
 
-CREATE TABLE `review`
+CREATE TABLE `reviews`
 (
     `id`      int PRIMARY KEY AUTO_INCREMENT,
     `game_id` int,
