@@ -1,5 +1,5 @@
-import {useParams} from 'react-router-dom'
-import {useEffect, useState} from 'react'
+import {useNavigate, useParams} from 'react-router-dom'
+import {useCallback, useEffect, useState} from 'react'
 import {Card, Rating, Label, Select} from 'flowbite-react'
 import {useAppContext} from './app-context'
 
@@ -14,10 +14,34 @@ const useSetGame = (setGame, gameId) => {
 
 const useSetGameRating = (setGameRating, gameId) => {
     useEffect(() => {
-       fetch(`${process.env.REACT_APP_API_URL}/average_reviews/${gameId}`)
-           .then(res => res.json())
-              .then(({average_reviews}) => setGameRating(average_reviews))
+        fetch(`${process.env.REACT_APP_API_URL}/average_reviews/${gameId}`)
+            .then(res => res.json())
+            .then(({average_reviews}) => setGameRating(average_reviews))
     }, [setGameRating, gameId])
+}
+
+const useReview = (userId, gameId) => {
+    const navigate = useNavigate()
+
+    return useCallback(value => {
+        fetch(`${process.env.REACT_APP_API_URL}/add_review`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                user_id: userId,
+                game_id: gameId,
+                value
+            })
+        })
+            .then(res => res.json())
+            .then(({success}) => {
+                if (success) {
+                    navigate(0)
+                }
+            })
+    }, [])
 }
 
 export const Game = () => {
@@ -25,6 +49,7 @@ export const Game = () => {
     const [game, setGame] = useState({})
     const [gameRating, setGameRating] = useState(0)
     const {loggedIn, userId} = useAppContext()
+    const review = useReview(userId, game_id)
     useSetGame(setGame, game_id)
     useSetGameRating(setGameRating, game_id)
 
@@ -39,7 +64,7 @@ export const Game = () => {
         </Card>
         <div className={'mt-10'}>
             <Rating>
-                <Rating.Star />
+                <Rating.Star/>
                 <p className="ml-2 text-sm font-bold text-gray-900 dark:text-white">
                     {gameRating}
                 </p>
@@ -59,7 +84,7 @@ export const Game = () => {
             <Select
                 id="rating"
                 required={true}
-                onChange={e => console.log(e.target.value)}
+                onChange={e => review(e.target.value)}
                 disabled={!loggedIn}
             >
                 <option>
