@@ -101,7 +101,7 @@ create or replace procedure get_games(
     offset_input int
 )
 begin
-    select games.name, games.description, c.name as category
+    select games.id, games.name, games.description, c.name as category
     from games
              inner join categories c on games.category_id = c.id
     limit limit_input offset offset_input;
@@ -111,7 +111,7 @@ create or replace procedure get_comments(
     game_id_input int
 )
 begin
-    select u.email, content, created_at
+    select comments.id, u.email, content, created_at
     from comments
              inner join user_comments uc on comments.id = uc.comment_id
              inner join users u on uc.user_id = u.id
