@@ -100,3 +100,15 @@ begin
              inner join categories c on games.category_id = c.id
     limit limit_input offset offset_input;
 end;
+
+create or replace procedure get_comments(
+    game_id_input int
+)
+begin
+    select u.email, content, created_at
+    from comments
+             inner join user_comments uc on comments.id = uc.comment_id
+             inner join users u on uc.user_id = u.id
+    where game_id = game_id_input;
+end;
+
