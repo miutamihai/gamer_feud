@@ -11,23 +11,11 @@ export const AppNavbar = () => <Navbar
     </Navbar.Brand>
     <Navbar.Toggle/>
     <Navbar.Collapse>
-        <Navbar.Link
-            href="/navbars"
-            active={true}
-        >
+        <Navbar.Link href="/">
             Home
         </Navbar.Link>
-        <Navbar.Link href="/navbars">
-            About
-        </Navbar.Link>
-        <Navbar.Link href="/navbars">
-            Services
-        </Navbar.Link>
-        <Navbar.Link href="/navbars">
-            Pricing
-        </Navbar.Link>
-        <Navbar.Link href="/navbars">
-            Contact
+        <Navbar.Link href="/games">
+            Games
         </Navbar.Link>
     </Navbar.Collapse>
 </Navbar>
