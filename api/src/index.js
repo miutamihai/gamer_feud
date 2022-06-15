@@ -6,6 +6,7 @@ const {create_functions} = require('./create-functions')
 const {populate_tables} = require('./populate-tables')
 const {register_user} = require('./register-user')
 const {login_user} = require('./login-user')
+const {add_user_game} = require('./add-user-game')
 const express = require('express')
 
 config()
@@ -20,6 +21,7 @@ app.get('/', function (req, res) {
 app.post('/register', function (req, res) {
     register_user(req.body)
         .then(() => res.json({success: true}))
+        .catch(err => res.json({success: false, err}))
 })
 
 app.post('/login', function (req, res) {
@@ -31,6 +33,13 @@ app.post('/login', function (req, res) {
                 res.status(401).json({success: false})
             }
         })
+        .catch(err => res.json({success: false, err}))
+})
+
+app.post('/add_user_game', function (req, res) {
+    add_user_game(req.body)
+        .then(() => res.json({success: true}))
+        .catch(err => res.json({success: false, err}))
 })
 
 create_db()
