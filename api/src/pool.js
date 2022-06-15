@@ -7,7 +7,8 @@ const create_pool = () => mariadb.createPool({
     port: process.env.DB_PORT,
     user: process.env.DB_USER,
     password: process.env.DB_PASS,
-    connectionLimit: 5
+    connectionLimit: 5,
+    multipleStatements: true
 });
 
 const pool = () => {
