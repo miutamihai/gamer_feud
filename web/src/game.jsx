@@ -2,6 +2,7 @@ import {useNavigate, useParams} from 'react-router-dom'
 import {useCallback, useEffect, useState} from 'react'
 import {Card, Rating, Label, Select, Textarea} from 'flowbite-react'
 import {useAppContext} from './app-context'
+import {Comment} from './comment'
 
 const useSetGame = (setGame, gameId) => {
     useEffect(() => {
@@ -44,14 +45,26 @@ const useReview = (userId, gameId) => {
     }, [])
 }
 
+const useComments = setComments => {
+    const {game_id} = useParams()
+
+    useEffect(() => {
+        fetch(`${process.env.REACT_APP_API_URL}/comments/${game_id}`)
+            .then(res => res.json())
+            .then(({comments}) => setComments(comments))
+    }, [game_id, setComments])
+}
+
 export const Game = () => {
     const {game_id} = useParams()
     const [game, setGame] = useState({})
     const [gameRating, setGameRating] = useState(0)
+    const [comments, setComments] = useState([])
     const {loggedIn, userId} = useAppContext()
     const review = useReview(userId, game_id)
     useSetGame(setGame, game_id)
     useSetGameRating(setGameRating, game_id)
+    useComments(setComments)
 
     return <div className={'flex items-center justify-center w-screen flex-col'} style={{minHeight: '70vh'}}>
         <Card>
@@ -121,6 +134,11 @@ export const Game = () => {
                 rows={4}
                 disabled={!loggedIn}
             />
+        </div>
+        <div className={'mt-5'}>
+            {comments.map(comment => <Comment key={comment.id} id={comment.id} content={comment.content}
+                                              user_id={comment.user_id} created_at={comment.created_at}
+                                              email={comment.email}/>)}
         </div>
     </div>
 }

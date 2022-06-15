@@ -96,7 +96,7 @@ create or replace procedure get_comments(
     game_id_input int
 )
 begin
-    select comments.id, u.email, content, created_at
+    select comments.id, u.email, content, created_at, u.id as user_id
     from comments
              inner join user_comments uc on comments.id = uc.comment_id
              inner join users u on uc.user_id = u.id
