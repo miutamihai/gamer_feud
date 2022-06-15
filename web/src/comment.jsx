@@ -1,8 +1,27 @@
 import {Card, Button} from 'flowbite-react'
 import {useAppContext} from './app-context'
+import {useNavigate} from 'react-router-dom'
+import {useCallback} from 'react'
+
+const useDeleteComment = id => {
+    const navigate = useNavigate()
+
+    return useCallback(() => {
+       fetch(`${process.env.REACT_APP_API_URL}/delete_comment/${id}`, {
+          method: 'DELETE'
+       })
+           .then(res => res.json())
+           .then(({success}) => {
+                if (success) {
+                     navigate(0)
+                }
+           })
+    }, [id, navigate])
+}
 
 export const Comment = ({id, email, content, created_at, user_id}) => {
     const {userId} = useAppContext()
+    const deleteComment = useDeleteComment(id)
 
     return <div className={'mt-5'}>
         <Card>
@@ -12,7 +31,7 @@ export const Comment = ({id, email, content, created_at, user_id}) => {
             <p className="font-normal text-gray-700 dark:text-gray-400">
                 {content}
             </p>
-            {user_id === userId && <Button>
+            {`${user_id}` === `${userId}` && <Button color={'failure'} onClick={deleteComment}>
                 Delete comment
                 <svg
                     className="ml-2 -mr-1 h-4 w-4"
