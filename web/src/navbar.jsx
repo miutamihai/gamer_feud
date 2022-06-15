@@ -17,5 +17,8 @@ export const AppNavbar = () => <Navbar
         <Navbar.Link href="/games">
             Games
         </Navbar.Link>
+        <Navbar.Link href="/login">
+            Login
+        </Navbar.Link>
     </Navbar.Collapse>
 </Navbar>
