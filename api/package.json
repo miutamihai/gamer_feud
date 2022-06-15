@@ -4,7 +4,8 @@
   "description": "",
   "main": "src/index.js",
   "scripts": {
-    "start": "node src/index.js"
+    "start": "node src/index.js",
+    "generate_hash": "PASSWORD_SALT=GAMER_FEUD_SALT node src/generate-hash.js"
   },
   "keywords": [],
   "author": "",

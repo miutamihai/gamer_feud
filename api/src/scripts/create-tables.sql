@@ -6,7 +6,8 @@ CREATE TABLE `users`
 (
     `id`              int PRIMARY KEY AUTO_INCREMENT,
     `email`           varchar(255),
-    `hashed_password` text
+    `hashed_password` text,
+    constraint users_email_unique unique (email)
 );
 
 CREATE TABLE `categories`
