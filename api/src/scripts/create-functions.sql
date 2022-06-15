@@ -20,3 +20,10 @@ create or replace function user_reviewed_game(
 begin
     return (select count(id) from reviews where user_id = user_id_input and game_id = game_id_input) > 0;
 end;
+
+create or replace function get_game_average_reviews(
+    game_id_input int
+) returns float
+begin
+    return (select coalesce(avg(value), 0) from reviews where game_id = game_id_input);
+end;

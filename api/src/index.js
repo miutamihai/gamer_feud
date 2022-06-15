@@ -18,6 +18,7 @@ const {get_games_count} = require('./get-games-count')
 const {get_games} = require('./get-games')
 const {get_comments} = require('./get-comments')
 const {user_reviewed_game} = require('./user-reviewed-game')
+const {get_game_average_reviews} = require('./get-game-average-reviews')
 const express = require('express')
 
 config()
@@ -107,6 +108,12 @@ app.get('/comments/:game_id', function (req, res) {
 app.get('/user_reviewed_game/:user_id/:game_id', function (req, res) {
     user_reviewed_game(req.params)
         .then(reviewed => res.json({success: true, reviewed: !!reviewed}))
+        .catch(err => res.status(500).json({success: false, err}))
+})
+
+app.get('/average_reviews/:game_id', function (req, res) {
+    get_game_average_reviews(req.params)
+        .then(average_reviews => res.json({success: true, average_reviews}))
         .catch(err => res.status(500).json({success: false, err}))
 })
 
