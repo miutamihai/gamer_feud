@@ -2,7 +2,7 @@ import {Navbar} from 'flowbite-react'
 import {useAppContext} from './app-context'
 
 export const AppNavbar = () => {
-    const {loggedIn} = useAppContext()
+    const {loggedIn, userId} = useAppContext()
 
     return <Navbar
         fluid={true}

@@ -5,7 +5,7 @@ create or replace function user_exists(
     password_input text
 ) returns int
 begin
-    return (select count(id) from users where hashed_password = password_input and email = email_input);
+    return (select id from users where hashed_password = password_input and email = email_input);
 end;
 
 create or replace function get_games_count() returns int

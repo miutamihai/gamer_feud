@@ -32,15 +32,15 @@ app.use(express.json())
 
 app.post('/register', function (req, res) {
     register_user(req.body)
-        .then(() => res.json({success: true}))
+        .then(user_id => res.json({success: true, user_id}))
         .catch(err => res.status(500).json({success: false, err}))
 })
 
 app.post('/login', function (req, res) {
     login_user(req.body)
-        .then(should_login => {
-            if (should_login) {
-                res.json({success: true})
+        .then(user_id => {
+            if (user_id) {
+                res.json({success: true, user_id})
             } else {
                 res.status(401).json({success: false})
             }

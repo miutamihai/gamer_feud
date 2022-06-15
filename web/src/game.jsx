@@ -24,7 +24,7 @@ export const Game = () => {
     const {game_id} = useParams()
     const [game, setGame] = useState({})
     const [gameRating, setGameRating] = useState(0)
-    const {loggedIn} = useAppContext()
+    const {loggedIn, userId} = useAppContext()
     useSetGame(setGame, game_id)
     useSetGameRating(setGameRating, game_id)
 

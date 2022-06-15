@@ -17,7 +17,7 @@ export const Games = () => {
 
     return <div className={'flex items-center justify-center w-screen flex-col'} style={{minHeight: '70vh'}}>
         <h1 className={'font-medium leading-tight text-5xl mt-0 mb-2'}>Games</h1>
-        {games.map(game => <div id={game.id} className={'mt-10'}>
+        {games.map(game => <div key={game.id} className={'mt-10'}>
             <Card>
                 <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                     {game.name} - {game.category}

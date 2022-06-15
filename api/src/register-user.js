@@ -6,6 +6,7 @@ const register_user = ({email, password}) => {
 
     return pool()
         .then(connection => connection.query('use gamer_feud; call register(?, ?)', [email, hashed_password]))
+        .then(result => result[1][0].id)
 }
 
 module.exports = {

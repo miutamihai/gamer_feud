@@ -8,14 +8,28 @@ import {Register} from './register'
 import {Logout} from './logout'
 import {AppContext, useDefaultAppContext} from './app-context'
 
+const LogoutRoute = () => <Logout/>
+
+const RegisterRoute = () => <Register/>
+
+const LoginRoute = () => <Login/>
+
+const GameRoute = () => <Game/>
+
+const GamesRoute = () => <Games/>
+
+const HomeRoute = () => <Home/>
+
+const Router = () => <Routes>
+    <Route path={'/logout'} element={<LogoutRoute/>}/>
+    <Route path={'/register'} element={<RegisterRoute/>}/>
+    <Route path={'/login'} element={<LoginRoute/>}/>
+    <Route path="/games/:game_id" element={<GameRoute/>}/>
+    <Route path="/games" element={<GamesRoute/>}/>
+    <Route path="/" exact element={<HomeRoute/>}/>
+</Routes>
+
 export const App = () => <AppContext.Provider value={useDefaultAppContext()}>
-  <AppNavbar />
-  <Routes>
-    <Route path={'/logout'} element={<Logout />} />
-    <Route path={'/register'} element={<Register />} />
-    <Route path={'/login'} element={<Login />} />
-    <Route path="/games/:game_id" element={<Game />} />
-    <Route path="/games" element={<Games />} />
-    <Route path="/" exact element={<Home />} />
-  </Routes>
-  </AppContext.Provider>
+    <AppNavbar/>
+    <Router/>
+</AppContext.Provider>

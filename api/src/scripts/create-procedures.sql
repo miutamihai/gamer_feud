@@ -7,6 +7,7 @@ create or replace procedure register(
 begin
     start transaction;
     insert into users (email, hashed_password) values (email_input, password_input);
+    select id from users where email = email_input;
     commit;
 end;
 

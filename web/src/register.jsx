@@ -3,7 +3,7 @@ import {useCallback, useState} from 'react'
 import {useNavigate} from 'react-router-dom'
 import {useAppContext} from './app-context'
 
-const useRegister = (email, password, setError, setLoggedIn) => {
+const useRegister = (email, password, setError, setLoggedIn, setUserId) => {
     const navigate = useNavigate()
 
     return useCallback(() => {
@@ -13,9 +13,12 @@ const useRegister = (email, password, setError, setLoggedIn) => {
             }), headers: {'Content-Type': 'application/json'}
         })
             .then(res => res.json())
-            .then(({success}) => {
+            .then(({success, user_id}) => {
                 if (success) {
                     window.sessionStorage.setItem('loggedIn', true)
+                    window.sessionStorage.setItem('user_id', user_id)
+
+                    setUserId(user_id)
                     setLoggedIn(true)
                     navigate('/')
                 } else {
@@ -23,15 +26,15 @@ const useRegister = (email, password, setError, setLoggedIn) => {
                 }
             })
             .catch(err => setError(err.message || 'An error occurred'))
-    }, [navigate, email, password, setError])
+    }, [navigate, email, password, setError, setLoggedIn, setUserId])
 }
 
 export const Register = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [error, setError] = useState('')
-    const {setLoggedIn} = useAppContext()
-    const register = useRegister(email, password, setError, setLoggedIn)
+    const {setLoggedIn, setUserId} = useAppContext()
+    const register = useRegister(email, password, setError, setLoggedIn, setUserId)
 
     return <div className={'flex flex-col items-center justify-center w-screen'}
                 style={{minHeight: '70vh'}}>
