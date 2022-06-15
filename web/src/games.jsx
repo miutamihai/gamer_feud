@@ -1,21 +1,37 @@
 import {useEffect, useState} from 'react'
 import {Card, Button} from 'flowbite-react'
 import {useNavigate} from 'react-router-dom'
+import {GamesPagination} from './games-pagination'
 
-const useGames = setGames => {
+const getPageSize = () => process.env.REACT_APP_PAGE_SIZE
+
+const calculateOffset = currentPage => (currentPage - 1) * getPageSize()
+
+const buildUrl = currentPage => {
+    const base = `${process.env.REACT_APP_API_URL}/games`
+    const params = new URLSearchParams()
+    params.append('limit', getPageSize())
+    params.append('offset', calculateOffset(currentPage))
+
+    return `${base}?${params.toString()}`
+}
+
+const useGames = (setGames, currentPage) => {
     useEffect(() => {
-       fetch(`${process.env.REACT_APP_API_URL}/games`)
-           .then(res => res.json())
-           .then(({games}) => setGames(games))
-    }, [setGames])
+        fetch(buildUrl(currentPage))
+            .then(res => res.json())
+            .then(({games}) => setGames(games))
+    }, [setGames, currentPage])
 }
 
 export const Games = () => {
-    const [games, setGames] = useState([]);
+    const [games, setGames] = useState([])
+    const [currentPage, setCurrentPage] = useState(1)
     const navigate = useNavigate()
-    useGames(setGames);
+    useGames(setGames, currentPage)
 
     return <div className={'flex items-center justify-center w-screen flex-col'} style={{minHeight: '70vh'}}>
+        <GamesPagination currentPage={currentPage} setCurrentPage={setCurrentPage}/>
         <h1 className={'font-medium leading-tight text-5xl mt-0 mb-2'}>Games</h1>
         {games.map(game => <div key={game.id} className={'mt-10'}>
             <Card>
