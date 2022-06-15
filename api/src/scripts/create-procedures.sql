@@ -47,3 +47,13 @@ begin
     values (user_id_input, new_game_id);
     commit;
 end;
+
+create or replace procedure add_category(
+    in name_input varchar(255),
+    in description_input varchar(255)
+)
+begin
+    start transaction ;
+    insert into categories (name, description) values (name_input, description_input);
+    commit ;
+end;
