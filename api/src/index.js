@@ -20,10 +20,13 @@ const {user_reviewed_game} = require('./user-reviewed-game')
 const {get_game_average_reviews} = require('./get-game-average-reviews')
 const {get_categories} = require('./get-categories')
 const express = require('express')
+const cors = require('cors')
 
 config()
 
 const app = express()
+
+app.use(cors())
 
 app.use(express.json())
 
