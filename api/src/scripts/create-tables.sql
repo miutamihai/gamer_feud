@@ -22,7 +22,8 @@ CREATE TABLE `games`
     `id`          int PRIMARY KEY AUTO_INCREMENT,
     `name`        varchar(255),
     `category_id` int,
-    `description` varchar(255),
+    `description` text,
+    constraint game_name_unique unique (name),
     CONSTRAINT `fk_games_categories` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`)
 );
 
