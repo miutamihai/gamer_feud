@@ -1,0 +1,7 @@
+services:
+  database:
+    image: mariadb:10.6.0
+    ports:
+      - "3306:3306"
+    environment:
+      MARIADB_ROOT_PASSWORD: "root"
