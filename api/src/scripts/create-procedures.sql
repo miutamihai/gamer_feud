@@ -79,3 +79,13 @@ begin
     delete from games where id = game_id_input ;
     commit ;
 end;
+
+create or replace procedure delete_comment(
+    comment_id_input integer
+)
+begin
+    start transaction ;
+    delete from user_comments where comment_id = comment_id_input ;
+    delete from comments where id = comment_id_input ;
+    commit ;
+end;

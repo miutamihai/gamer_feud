@@ -13,6 +13,7 @@ const {add_game} = require('./add-game')
 const {add_category} = require('./add-category')
 const {add_comment} = require('./add-comment')
 const {delete_game} = require('./delete-game')
+const {delete_comment} = require('./delete-comment')
 const express = require('express')
 
 config()
@@ -74,6 +75,12 @@ app.post('/add_comment', function (req, res) {
 
 app.delete('/delete_game/:game_id', function (req, res) {
     delete_game(req.params)
+        .then(() => res.json({success: true}))
+        .catch(err => res.json({success: false, err}))
+})
+
+app.delete('/delete_comment/:comment_id', function (req, res) {
+    delete_comment(req.params)
         .then(() => res.json({success: true}))
         .catch(err => res.json({success: false, err}))
 })
