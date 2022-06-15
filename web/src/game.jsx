@@ -1,8 +1,9 @@
 import {useNavigate, useParams} from 'react-router-dom'
 import {useCallback, useEffect, useState} from 'react'
-import {Card, Rating, Label, Select, Textarea} from 'flowbite-react'
+import {Card, Rating, Label, Select} from 'flowbite-react'
 import {useAppContext} from './app-context'
 import {Comment} from './comment'
+import {AddComment} from './add-comment'
 
 const useSetGame = (setGame, gameId) => {
     useEffect(() => {
@@ -120,25 +121,9 @@ export const Game = () => {
                 </option>
             </Select>
         </div>
-        <div id="textarea" className={'mt-5'}>
-            <div className="mb-2 block">
-                <Label
-                    htmlFor="comment"
-                    value="Your message"
-                />
-            </div>
-            <Textarea
-                id="comment"
-                placeholder="Leave a comment..."
-                required={true}
-                rows={4}
-                disabled={!loggedIn}
-            />
-        </div>
-        <div className={'mt-5'}>
-            {comments.map(comment => <Comment key={comment.id} id={comment.id} content={comment.content}
-                                              user_id={comment.user_id} created_at={comment.created_at}
-                                              email={comment.email}/>)}
-        </div>
+        <AddComment/>
+        {comments.map(comment => <Comment key={comment.id} id={comment.id} content={comment.content}
+                                          user_id={comment.user_id} created_at={comment.created_at}
+                                          email={comment.email}/>)}
     </div>
 }
