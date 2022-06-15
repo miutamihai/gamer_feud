@@ -1,6 +1,7 @@
 import {useParams} from 'react-router-dom'
 import {useEffect, useState} from 'react'
 import {Card, Rating, Label, Select} from 'flowbite-react'
+import {useAppContext} from './app-context'
 
 const useSetGame = (setGame, gameId) => {
     useEffect(() => {
@@ -23,6 +24,7 @@ export const Game = () => {
     const {game_id} = useParams()
     const [game, setGame] = useState({})
     const [gameRating, setGameRating] = useState(0)
+    const {loggedIn} = useAppContext()
     useSetGame(setGame, game_id)
     useSetGameRating(setGameRating, game_id)
 
@@ -58,6 +60,7 @@ export const Game = () => {
                 id="rating"
                 required={true}
                 onChange={e => console.log(e.target.value)}
+                disabled={!loggedIn}
             >
                 <option>
                     0
