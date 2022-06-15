@@ -118,3 +118,7 @@ begin
     where game_id = game_id_input;
 end;
 
+create or replace procedure get_categories()
+begin
+    select * from categories;
+end;
