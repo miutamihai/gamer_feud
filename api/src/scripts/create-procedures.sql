@@ -89,3 +89,14 @@ begin
     delete from comments where id = comment_id_input ;
     commit ;
 end;
+
+create or replace procedure get_games(
+    limit_input int,
+    offset_input int
+)
+begin
+    select games.name, games.description, c.name as category
+    from games
+             inner join categories c on games.category_id = c.id
+    limit limit_input offset offset_input;
+end;

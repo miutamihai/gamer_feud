@@ -15,6 +15,7 @@ const {add_comment} = require('./add-comment')
 const {delete_game} = require('./delete-game')
 const {delete_comment} = require('./delete-comment')
 const {get_games_count} = require('./get-games-count')
+const {get_games} = require('./get-games')
 const express = require('express')
 
 config()
@@ -86,6 +87,12 @@ app.delete('/delete_comment/:comment_id', function (req, res) {
 app.get('/games_count', function (req, res) {
     get_games_count()
         .then(count => res.json({success: true, count}))
+        .catch(err => res.json({success: false, err}))
+})
+
+app.get('/games', function (req, res) {
+    get_games(req.query)
+        .then(games => res.json({success: true, games}))
         .catch(err => res.json({success: false, err}))
 })
 
