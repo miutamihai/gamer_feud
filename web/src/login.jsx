@@ -1,8 +1,9 @@
 import {Label, TextInput, Button, Alert} from 'flowbite-react'
 import {useCallback, useState} from 'react'
 import {useNavigate} from 'react-router-dom'
+import {useAppContext} from './app-context'
 
-const useLogin = (email, password, setError) => {
+const useLogin = (email, password, setError, setLoggedIn) => {
     const navigate = useNavigate()
 
     return useCallback(() => {
@@ -14,6 +15,8 @@ const useLogin = (email, password, setError) => {
             .then(res => res.json())
             .then(({success}) => {
                 if (success) {
+                    setLoggedIn(true)
+                    window.sessionStorage.setItem('loggedIn', true)
                     navigate('/')
                 } else {
                     setError('Invalid email or password')
@@ -27,7 +30,8 @@ export const Login = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [error, setError] = useState('')
-    const login = useLogin(email, password, setError)
+    const {setLoggedIn} = useAppContext()
+    const login = useLogin(email, password, setError, setLoggedIn)
 
     return <div className={'flex flex-col items-center justify-center w-screen'}
                 style={{minHeight: '70vh'}}>
