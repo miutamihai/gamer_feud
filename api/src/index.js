@@ -17,6 +17,7 @@ const {delete_comment} = require('./delete-comment')
 const {get_games_count} = require('./get-games-count')
 const {get_games} = require('./get-games')
 const {get_comments} = require('./get-comments')
+const {user_reviewed_game} = require('./user-reviewed-game')
 const express = require('express')
 
 config()
@@ -28,7 +29,7 @@ app.use(express.json())
 app.post('/register', function (req, res) {
     register_user(req.body)
         .then(() => res.json({success: true}))
-        .catch(err => res.json({success: false, err}))
+        .catch(err => res.status(500).json({success: false, err}))
 })
 
 app.post('/login', function (req, res) {
@@ -40,67 +41,73 @@ app.post('/login', function (req, res) {
                 res.status(401).json({success: false})
             }
         })
-        .catch(err => res.json({success: false, err}))
+        .catch(err => res.status(500).json({success: false, err}))
 })
 
 app.post('/add_user_game', function (req, res) {
     add_user_game(req.body)
         .then(() => res.json({success: true}))
-        .catch(err => res.json({success: false, err}))
+        .catch(err => res.status(500).json({success: false, err}))
 })
 
 app.post('/add_review', function (req, res) {
     add_review(req.body)
         .then(() => res.json({success: true}))
-        .catch(err => res.json({success: false, err}))
+        .catch(err => res.status(500).json({success: false, err}))
 })
 
 app.post('/add_game', function (req, res) {
     add_game(req.body)
         .then(() => res.json({success: true}))
-        .catch(err => res.json({success: false, err}))
+        .catch(err => res.status(500).json({success: false, err}))
 })
 
 app.post('/add_category', function (req, res) {
     add_category(req.body)
         .then(() => res.json({success: true}))
-        .catch(err => res.json({success: false, err}))
+        .catch(err => res.status(500).json({success: false, err}))
 })
 
 app.post('/add_comment', function (req, res) {
     add_comment(req.body)
         .then(() => res.json({success: true}))
-        .catch(err => res.json({success: false, err}))
+        .catch(err => res.status(500).json({success: false, err}))
 })
 
 app.delete('/delete_game/:game_id', function (req, res) {
     delete_game(req.params)
         .then(() => res.json({success: true}))
-        .catch(err => res.json({success: false, err}))
+        .catch(err => res.status(500).json({success: false, err}))
 })
 
 app.delete('/delete_comment/:comment_id', function (req, res) {
     delete_comment(req.params)
         .then(() => res.json({success: true}))
-        .catch(err => res.json({success: false, err}))
+        .catch(err => res.status(500).json({success: false, err}))
 })
 
 app.get('/games_count', function (req, res) {
     get_games_count()
         .then(count => res.json({success: true, count}))
-        .catch(err => res.json({success: false, err}))
+        .catch(err => res.status(500).json({success: false, err}))
 })
 
 app.get('/games', function (req, res) {
     get_games(req.query)
         .then(games => res.json({success: true, games}))
-        .catch(err => res.json({success: false, err}))
+        .catch(err => res.status(500).json({success: false, err}))
 })
 
 app.get('/comments/:game_id', function (req, res) {
     get_comments(req.params)
         .then(comments => res.json({success: true, comments}))
-        .catch(err => res.json({success: false, err}))
+        .catch(err => res.status(500).json({success: false, err}))
+})
+
+app.get('/user_reviewed_game/:user_id/:game_id', function (req, res) {
+    user_reviewed_game(req.params)
+        .then(reviewed => res.json({success: true, reviewed: !!reviewed}))
+        .catch(err => res.status(500).json({success: false, err}))
 })
 
 create_db()

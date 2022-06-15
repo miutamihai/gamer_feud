@@ -43,6 +43,7 @@ CREATE TABLE `reviews`
     `game_id` int,
     `user_id` int,
     `value`   int,
+    constraint reviews_game_user_unique unique (game_id, user_id),
     CONSTRAINT `fk_review_games` FOREIGN KEY (`game_id`) REFERENCES `games` (`id`),
     CONSTRAINT `fk_review_users` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 );

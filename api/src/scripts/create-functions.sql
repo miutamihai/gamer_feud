@@ -12,3 +12,11 @@ create or replace function get_games_count() returns int
 begin
     return (select count(id) from games);
 end;
+
+create or replace function user_reviewed_game(
+    user_id_input int,
+    game_id_input int
+) returns bool
+begin
+    return (select count(id) from reviews where user_id = user_id_input and game_id = game_id_input) > 0;
+end;
