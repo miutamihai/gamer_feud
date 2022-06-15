@@ -13,7 +13,8 @@ CREATE TABLE `categories`
 (
     `id`          int PRIMARY KEY AUTO_INCREMENT,
     `name`        varchar(255),
-    `description` varchar(255)
+    `description` text,
+    constraint category_name_unique unique (name)
 );
 
 CREATE TABLE `games`
