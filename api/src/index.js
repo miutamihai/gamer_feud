@@ -14,6 +14,7 @@ const {add_category} = require('./add-category')
 const {add_comment} = require('./add-comment')
 const {delete_game} = require('./delete-game')
 const {delete_comment} = require('./delete-comment')
+const {get_games_count} = require('./get-games-count')
 const express = require('express')
 
 config()
@@ -21,10 +22,6 @@ config()
 const app = express()
 
 app.use(express.json())
-
-app.get('/', function (req, res) {
-    res.send('Hello World')
-})
 
 app.post('/register', function (req, res) {
     register_user(req.body)
@@ -83,6 +80,12 @@ app.delete('/delete_game/:game_id', function (req, res) {
 app.delete('/delete_comment/:comment_id', function (req, res) {
     delete_comment(req.params)
         .then(() => res.json({success: true}))
+        .catch(err => res.json({success: false, err}))
+})
+
+app.get('/games_count', function (req, res) {
+    get_games_count()
+        .then(count => res.json({success: true, count}))
         .catch(err => res.json({success: false, err}))
 })
 
