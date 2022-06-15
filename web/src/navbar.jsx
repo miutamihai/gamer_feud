@@ -21,14 +21,16 @@ export const AppNavbar = () => {
             <Navbar.Link href="/games">
                 Games
             </Navbar.Link>
-            {!loggedIn && <>
+            {!loggedIn ? <>
                 <Navbar.Link href="/login">
                     Login
                 </Navbar.Link>
                 <Navbar.Link href="/register">
                     Register
                 </Navbar.Link>
-            </>}
+            </> : <Navbar.Link href="/logout">
+                Logout
+            </Navbar.Link>}
         </Navbar.Collapse>
     </Navbar>
 }
