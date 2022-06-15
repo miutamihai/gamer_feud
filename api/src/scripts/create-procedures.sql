@@ -57,3 +57,15 @@ begin
     insert into categories (name, description) values (name_input, description_input);
     commit ;
 end;
+
+create or replace procedure add_comment(
+    content_input text,
+    game_id_input int ,
+    user_id_input int
+)
+begin
+    start transaction ;
+    insert into comments (content, game_id, created_at) values (content_input, game_id_input, now());
+    insert into user_comments (comment_id, user_id) values (last_insert_id(), user_id_input);
+    commit ;
+end;
