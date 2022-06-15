@@ -11,6 +11,7 @@ const {add_review} = require('./add-review')
 const {add_game} = require('./add-game')
 const {add_category} = require('./add-category')
 const {add_comment} = require('./add-comment')
+const {delete_game} = require('./delete-game')
 const express = require('express')
 
 config()
@@ -29,7 +30,7 @@ app.post('/register', function (req, res) {
 })
 
 app.post('/login', function (req, res) {
-   login_user(req.body)
+    login_user(req.body)
         .then(should_login => {
             if (should_login) {
                 res.json({success: true})
@@ -66,6 +67,12 @@ app.post('/add_category', function (req, res) {
 
 app.post('/add_comment', function (req, res) {
     add_comment(req.body)
+        .then(() => res.json({success: true}))
+        .catch(err => res.json({success: false, err}))
+})
+
+app.delete('/delete_game/:game_id', function (req, res) {
+    delete_game(req.params)
         .then(() => res.json({success: true}))
         .catch(err => res.json({success: false, err}))
 })

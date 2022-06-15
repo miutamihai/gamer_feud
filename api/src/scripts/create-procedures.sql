@@ -69,3 +69,13 @@ begin
     insert into user_comments (comment_id, user_id) values (last_insert_id(), user_id_input);
     commit ;
 end;
+
+create or replace procedure delete_game(
+    game_id_input integer
+)
+begin
+    start transaction ;
+    delete from user_games where game_id = game_id_input ;
+    delete from games where id = game_id_input ;
+    commit ;
+end;
