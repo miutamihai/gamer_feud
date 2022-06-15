@@ -1,6 +1,6 @@
 import {useNavigate, useParams} from 'react-router-dom'
 import {useCallback, useEffect, useState} from 'react'
-import {Card, Rating, Label, Select} from 'flowbite-react'
+import {Card, Rating, Label, Select, Textarea} from 'flowbite-react'
 import {useAppContext} from './app-context'
 
 const useSetGame = (setGame, gameId) => {
@@ -106,6 +106,21 @@ export const Game = () => {
                     5
                 </option>
             </Select>
+        </div>
+        <div id="textarea" className={'mt-5'}>
+            <div className="mb-2 block">
+                <Label
+                    htmlFor="comment"
+                    value="Your message"
+                />
+            </div>
+            <Textarea
+                id="comment"
+                placeholder="Leave a comment..."
+                required={true}
+                rows={4}
+                disabled={!loggedIn}
+            />
         </div>
     </div>
 }
