@@ -8,6 +8,7 @@ const {register_user} = require('./register-user')
 const {login_user} = require('./login-user')
 const {add_user_game} = require('./add-user-game')
 const {add_review} = require('./add-review')
+const {add_game} = require('./add-game')
 const express = require('express')
 
 config()
@@ -45,6 +46,12 @@ app.post('/add_user_game', function (req, res) {
 
 app.post('/add_review', function (req, res) {
     add_review(req.body)
+        .then(() => res.json({success: true}))
+        .catch(err => res.json({success: false, err}))
+})
+
+app.post('/add_game', function (req, res) {
+    add_game(req.body)
         .then(() => res.json({success: true}))
         .catch(err => res.json({success: false, err}))
 })
