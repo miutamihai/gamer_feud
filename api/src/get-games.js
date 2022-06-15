@@ -6,7 +6,7 @@ const get_games = ({limit, offset}) => {
         offset || process.env.DEFAULT_OFFSET
     ]
 
-    return pool().getConnection()
+    return pool()
         .then(connection => connection.query('use gamer_feud; call get_games(?, ?)', values))
         .then(result => result[1])
 }

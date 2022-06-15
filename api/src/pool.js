@@ -2,7 +2,7 @@ const mariadb = require('mariadb');
 
 let instance
 
-const create_pool = () => mariadb.createPool({
+const create_pool = () => mariadb.createConnection({
     host: process.env.DB_HOST,
     port: process.env.DB_PORT,
     user: process.env.DB_USER,

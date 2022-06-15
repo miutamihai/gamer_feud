@@ -1,5 +1,6 @@
 import {useEffect, useState} from 'react'
 import {Card, Button} from 'flowbite-react'
+import {useNavigate} from 'react-router-dom'
 
 const useGames = setGames => {
     useEffect(() => {
@@ -7,11 +8,11 @@ const useGames = setGames => {
            .then(res => res.json())
            .then(({games}) => setGames(games))
     }, [setGames])
-    
 }
 
 export const Games = () => {
     const [games, setGames] = useState([]);
+    const navigate = useNavigate()
     useGames(setGames);
 
     return <div className={'flex items-center justify-center w-screen flex-col'} style={{minHeight: '70vh'}}>
@@ -24,7 +25,7 @@ export const Games = () => {
                 <p className="font-normal text-gray-700 dark:text-gray-400">
                     {game.description}
                 </p>
-                <Button>
+                <Button onClick={() => navigate(`/games/${game.id}`)}>
                     Details
                     <svg
                         className="ml-2 -mr-1 h-4 w-4"
