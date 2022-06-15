@@ -24,14 +24,24 @@ const useGames = (setGames, currentPage) => {
     }, [setGames, currentPage])
 }
 
+const useTotalPages = setTotalPages => {
+    useEffect(() => {
+        fetch(`${process.env.REACT_APP_API_URL}/games_count`)
+            .then(res => res.json())
+            .then(({count}) => setTotalPages(Math.ceil(count / getPageSize())))
+    }, [setTotalPages])
+}
+
 export const Games = () => {
     const [games, setGames] = useState([])
     const [currentPage, setCurrentPage] = useState(1)
+    const [totalPages, setTotalPages] = useState(1)
     const navigate = useNavigate()
     useGames(setGames, currentPage)
+    useTotalPages(setTotalPages)
 
     return <div className={'flex items-center justify-center w-screen flex-col'} style={{minHeight: '70vh'}}>
-        <GamesPagination currentPage={currentPage} setCurrentPage={setCurrentPage}/>
+        <GamesPagination currentPage={currentPage} setCurrentPage={setCurrentPage} totalPages={totalPages}/>
         <h1 className={'font-medium leading-tight text-5xl mt-0 mb-2'}>Games</h1>
         {games.map(game => <div key={game.id} className={'mt-10'}>
             <Card>
