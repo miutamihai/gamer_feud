@@ -20,5 +20,8 @@ export const AppNavbar = () => <Navbar
         <Navbar.Link href="/login">
             Login
         </Navbar.Link>
+        <Navbar.Link href="/register">
+            Register
+        </Navbar.Link>
     </Navbar.Collapse>
 </Navbar>
