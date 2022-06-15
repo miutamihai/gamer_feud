@@ -7,7 +7,6 @@ const {create_triggers} = require('./create-triggers')
 const {populate_tables} = require('./populate-tables')
 const {register_user} = require('./register-user')
 const {login_user} = require('./login-user')
-const {add_user_game} = require('./add-user-game')
 const {add_review} = require('./add-review')
 const {add_game} = require('./add-game')
 const {add_category} = require('./add-category')
@@ -43,12 +42,6 @@ app.post('/login', function (req, res) {
                 res.status(401).json({success: false})
             }
         })
-        .catch(err => res.status(500).json({success: false, err}))
-})
-
-app.post('/add_user_game', function (req, res) {
-    add_user_game(req.body)
-        .then(() => res.json({success: true}))
         .catch(err => res.status(500).json({success: false, err}))
 })
 

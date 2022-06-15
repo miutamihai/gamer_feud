@@ -28,15 +28,6 @@ CREATE TABLE `games`
     CONSTRAINT `fk_games_categories` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`)
 );
 
-CREATE TABLE `user_games`
-(
-    `id`      int PRIMARY KEY AUTO_INCREMENT,
-    `game_id` int,
-    `user_id` int,
-    CONSTRAINT `fk_user_games_games` FOREIGN KEY (`game_id`) REFERENCES `games` (`id`),
-    CONSTRAINT `fk_user_games_users` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-);
-
 CREATE TABLE `reviews`
 (
     `id`      int PRIMARY KEY AUTO_INCREMENT,
