@@ -26,8 +26,14 @@ create or replace procedure add_review(
     value_input int
 )
 begin
+    declare review_id int;
     start transaction ;
-    insert into reviews (user_id, game_id, value) values (user_id_input, game_id_input, value_input);
+    select id into review_id from reviews where user_id = user_id_input and game_id = game_id_input;
+    if review_id is null then
+        insert into reviews (user_id, game_id, value) values (user_id_input, game_id_input, value_input);
+    else
+        update reviews set value = value_input where id = review_id;
+    end if;
     commit;
 end;
 
@@ -55,19 +61,19 @@ create or replace procedure add_category(
 begin
     start transaction ;
     insert into categories (name, description) values (name_input, description_input);
-    commit ;
+    commit;
 end;
 
 create or replace procedure add_comment(
     content_input text,
-    game_id_input int ,
+    game_id_input int,
     user_id_input int
 )
 begin
     start transaction ;
     insert into comments (content, game_id, created_at) values (content_input, game_id_input, now());
     insert into user_comments (comment_id, user_id) values (last_insert_id(), user_id_input);
-    commit ;
+    commit;
 end;
 
 create or replace procedure delete_game(
@@ -75,9 +81,9 @@ create or replace procedure delete_game(
 )
 begin
     start transaction ;
-    delete from user_games where game_id = game_id_input ;
-    delete from games where id = game_id_input ;
-    commit ;
+    delete from user_games where game_id = game_id_input;
+    delete from games where id = game_id_input;
+    commit;
 end;
 
 create or replace procedure delete_comment(
@@ -85,9 +91,9 @@ create or replace procedure delete_comment(
 )
 begin
     start transaction ;
-    delete from user_comments where comment_id = comment_id_input ;
-    delete from comments where id = comment_id_input ;
-    commit ;
+    delete from user_comments where comment_id = comment_id_input;
+    delete from comments where id = comment_id_input;
+    commit;
 end;
 
 create or replace procedure get_games(
